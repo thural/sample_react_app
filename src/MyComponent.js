@@ -7,10 +7,11 @@ class MyComponent extends Component {
   }
 
   render() {
+    const {title, onButtonClicked} = this.props
     return (
       <div>
-        <h3>{this.props.title}</h3>
-        <button onClick={this.props.onButtonClicked}>Click Me!</button>
+        <h3>{title}</h3>
+        <button onClick={onButtonClicked}>Click Me!</button>
       </div>
     );
   }
