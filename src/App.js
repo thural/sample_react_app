@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+import uniqid from "uniqid";
 import './App.css';
+import Overview from "./components/Overview";
+
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      task: { text: '' },
+      task: {
+        text: '',
+        id: uniqid()
+      },
       tasks: [],
     };
   };
@@ -15,6 +21,7 @@ class App extends Component {
     this.setState({
       task: {
         text: e.target.value,
+        id: this.state.task.id
       }
     });
   };
@@ -23,10 +30,19 @@ class App extends Component {
     e.preventDefault();
     this.setState({
       tasks: this.state.tasks.concat(this.state.task),
-      task: { text: '' },
+      task: {
+        text: '',
+        id: uniqid()
+      }
     });
   };
-
+  
+  deleteList = (taskId) => {
+    this.setState({
+      tasks: this.state.tasks.filter(task => task.id !== taskId)
+    })
+  };
+  
   render() {
     const { task, tasks } = this.state;
 
@@ -40,10 +56,9 @@ class App extends Component {
             onChange={this.handleChange}
             value={task.text}
           />
-          <button type="submit">
-            Add Task
-          </button>
+          <button type="submit">Add Task</button>
         </form>
+        <Overview tasks={tasks} deleteList={this.deleteList}/>
       </div>
     );
   }
